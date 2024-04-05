@@ -39,6 +39,7 @@ RUN pip install gradio==3.50.2
 #Get models
 WORKDIR /home/appuser/Grounded-Segment-Anything
 RUN wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
+### https://huggingface.co/lkeab/hq-sam/tree/main
 RUN wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth
 
 EXPOSE 7589
