@@ -369,7 +369,7 @@ if __name__ == "__main__":
     with block:
         with gr.Row():
             with gr.Column():
-                input_image = gr.Image(source='upload', type="pil", value="assets/demo1.jpg", tool="sketch")
+                input_image = gr.Image(source='upload', type="pil", value="demo/demo7.jpg", tool="sketch")
                 task_type = gr.Dropdown(["scribble", "automask", "det", "seg", "inpainting", "automatic"], value="automatic", label="Mode")
                 text_prompt = gr.Textbox(label="Text Prompt")
                 inpaint_prompt = gr.Textbox(label="Inpaint Prompt")

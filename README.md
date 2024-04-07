@@ -32,28 +32,39 @@ The recent Segment Anything Model (SAM) represents a big leap in scaling up segm
 
 <img width="1096" alt="image" src='figs/sam-hf-framework.png'>
 
-Quick Start (WIP)
------------------
+Demo App
+--------
 
-git clone this repo
+The demonstration app is built upon the gradio framework. The app utilizes a lighter version of HQ-SAM to provide a near real-time demonstration of the segmentation process.
+
+Quick Start
+-----------
+
+Start by Git cloning this repo.
+
+While it is possible to run the demo directly, a Docker environment should be used to ensure compatibility. 
+
+GPU with updated CUDA driver is required. WSL2 and Docker Desktop are recommended for Windows users.
+
+The following commands illustrates the process of building your own demo docker container.
 
 ```
+# From the folder where the provided Dockerfile is located:
+
 docker build -t <NAME> .
 
-###The build process no longer than 5 minutes
+# The image build process no longer than 5 minutes. After a succesful build:
 
 docker run -it --gpus=all -p 7589:7589 <NAME>
 
-### Once the terminal has opened:
+# Once the terminal has opened:
 
 bash demo.sh
 
 ```
 
-Find the link in the console output.
-First time use of the image processor shoul take around 2 minutes to load relevant model.
-
-Remember to run wsl --shutdown after use.
+A public URL should appear in the console log. This link can be used to share the demo.
+First time use of the image processor should take around 2 minutes to load relevant models onto the GPU.
 
 Quantitative comparison between SAM and HQ-SAM
 ----------------------------------------------
@@ -80,4 +91,4 @@ Note: Using ViT-L backbone. We adopt the SOTA model XMem as our video boxes prom
 
 ## Acknowledgments
 
-- Thanks [SAM](https://github.com/facebookresearch/segment-anything), [Grounded SAM](https://github.com/IDEA-Research/Grounded-Segment-Anything) and [MobileSAM](https://github.com/ChaoningZhang/MobileSAM) for their public code and released models.
+- Thanks [HQ-SAM](https://github.com/SysCV/sam-hq) and [Grounded SAM](https://github.com/IDEA-Research/Grounded-Segment-Anything) for their public code and released models.

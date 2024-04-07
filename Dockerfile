@@ -1,7 +1,8 @@
 FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-devel
 
-COPY ./sources.list /etc/apt/ 
-# Use local archives to speed up build
+# Use local hk archive servers to speed up build
+COPY ./sources.list /etc/apt/
+
 # Arguments to build Docker Image using CUDA
 ARG USE_CUDA=0
 ARG TORCH_ARCH=
@@ -14,7 +15,8 @@ ENV CUDA_HOME /usr/local/cuda-11.6/
 RUN mkdir -p /home/appuser/Grounded-Segment-Anything
 COPY . /home/appuser/Grounded-Segment-Anything/
 
-# RUN apt-get update --fix-missing
+# Optional fix for images fetched from non-hk archives
+# RUN apt-get update --fix-missing 
 RUN apt-get update && apt-get install --no-install-recommends wget ffmpeg=7:* \
     libsm6=2:* libxext6=2:* git=1:* nano=2.* \
     vim=2:* -y \
@@ -32,14 +34,16 @@ RUN pip install --no-cache-dir diffusers[torch]==0.15.1 opencv-python==4.7.0.72 
     pycocotools==2.0.6 matplotlib==3.5.3 \
     onnxruntime==1.14.1 onnx==1.13.1 ipykernel==6.16.2 scipy
 
-# Fix to ensure compatiblity
+# Separated installation of these modules to ensure compatiblity
 RUN pip install litellm
 RUN pip install gradio==3.50.2
 
 #Get models
 WORKDIR /home/appuser/Grounded-Segment-Anything
 RUN wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth
-###https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vit_h.pth?download=true
-RUN wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth
+
+# Optional commands to force download of models within docker image
+# RUN wget https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vit_h.pth?download=true
+# RUN wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth
 
 EXPOSE 7589
